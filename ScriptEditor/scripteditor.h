@@ -8,6 +8,7 @@
 #include <QMessageBox>
 #include <QTextStream>
 #include <QCloseEvent>
+#include <QObject>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -23,7 +24,11 @@ public:
     ScriptEditor(QWidget *parent = nullptr);
     ~ScriptEditor();
 
-private:
-    Ui::ScriptEditor *ui;
-};
+protected:
+    void closeEvent(QCloseEvent *event) override;
+
+
+private slots:
+    void on_actionNew_triggered();
+
 #endif // SCRIPTEDITOR_H
