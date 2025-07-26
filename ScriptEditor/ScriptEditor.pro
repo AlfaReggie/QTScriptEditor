@@ -1,9 +1,10 @@
 QT += core gui widgets network
 
-CONFIG += c++11
-# You can make your code fail to compile if it uses deprecated Qt Functions
+CONFIG += c++17
 
-DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000
+CONFIG += warn_on
+
+CONFIG += release
 
 SOURCES += \
         main.cpp \
@@ -15,9 +16,6 @@ HEADERS += \
 FORMS += \
         scripteditor.ui
 
-#Default rules for development.
+target.path = $$[QT_INSTALL_BINS]
 
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-
-!isEmpty(target.path):INSTALL += target
+INSTALLS += target

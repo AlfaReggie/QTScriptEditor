@@ -2,10 +2,16 @@
 #define SCRIPTEDITOR_H
 
 #include <QMainWindow>
+#include <QUdpSocket>
+#include <QFile>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QTextStream>
+#include <QCloseEvent>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
-class ScriptEditor;
+    class ScriptEditor;
 }
 QT_END_NAMESPACE
 
