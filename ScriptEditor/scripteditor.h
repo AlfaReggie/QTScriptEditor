@@ -30,5 +30,21 @@ protected:
 
 private slots:
     void on_actionNew_triggered();
+    void on_actionOpen_treggered();
+    void on_actionSave_triggered();
+    void on_actionSaveAs_triggered();
+    void on_connectButton_clicked();
+    void on_executeButton_clicked();
+    void readResponse();
+
+private:
+    Ui::ScriptEditor *ui;
+    QUdpSocket *udpSocket;
+    QString currentFile;
+    bool isConnected;
+
+    void setCurrentFile(const QString &fileName);
+    bool saveFile(const QString &fileName);
+    bool loadFile(const QString &fileName);
 
 #endif // SCRIPTEDITOR_H
