@@ -13,7 +13,7 @@ ScriptEditor::ScriptEditor(QWidget *parent)
 
     // Создаем UDP сокет
     udpSocket = new QUdpSocket(this);
-    udpSocket->bind(12345);
+    udpSocket->bind(12345); // Порт редактора
 
     connect(udpSocket, &QUdpSocket::readyRead, this, &ScriptEditor::readResponse);
 
@@ -74,6 +74,7 @@ ScriptEditor::~ScriptEditor()
 
 void ScriptEditor::closeEvent(QCloseEvent *event)
 {
+    // Здесь можно добавить проверку на сохранение изменений
     event->accept();
 }
 
@@ -130,7 +131,7 @@ void ScriptEditor::on_connectButton_clicked()
     }
 
     isConnected = true;
-    ui->executeButton->setEnabled(true);
+    ui->connectButton->setEnabled(true);
     ui->connectButton->setText(tr("Подключено"));
     ui->connectButton->setEnabled(false);
     ui->statusbar->showMessage(tr("Подключено к %1:%2").arg(ip).arg(port));

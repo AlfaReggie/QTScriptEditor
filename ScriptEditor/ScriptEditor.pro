@@ -1,20 +1,28 @@
 QT += core gui widgets network
 
-CONFIG += c++11
+CONFIG += c++11 warn_on
 
-QMAKE_CXXFLAGS += -std=c++11
-greaterThan(QT_MAJOR_VERSION, 5): QT += core5compat
+# The following define makes your code fail to compile if it uses Qt features
+# that have been marked deprecated (the exact warnings depend on your Qt version)
+DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000
 
+TARGET = ScriptEditor
+TEMPLATE = app
+
+# Sources
 SOURCES += \
-        main.cpp \
-        scripteditor.cpp
+    main.cpp \
+    scripteditor.cpp
 
+# Headers
 HEADERS += \
-        scripteditor.h
+    scripteditor.h
 
+# Forms
 FORMS += \
-        scripteditor.ui
+    scripteditor.ui
 
-target.path = $$[QT_INSTALL_BINS]
-
-INSTALLS += target
+# Default rules for deployment.
+qnx: target.path = /tmp/$${TARGET}/bin
+else: unix:!android: target.path = /opt/$${TARGET}/bin
+!isEmpty(target.path): INSTALLS += target

@@ -8,7 +8,6 @@
 #include <QMessageBox>
 #include <QTextStream>
 #include <QCloseEvent>
-#include <QObject>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -30,7 +29,7 @@ protected:
 
 private slots:
     void on_actionNew_triggered();
-    void on_actionOpen_treggered();
+    void on_actionOpen_triggered();
     void on_actionSave_triggered();
     void on_actionSaveAs_triggered();
     void on_connectButton_clicked();
@@ -46,5 +45,5 @@ private:
     void setCurrentFile(const QString &fileName);
     bool saveFile(const QString &fileName);
     bool loadFile(const QString &fileName);
-
+};
 #endif // SCRIPTEDITOR_H
