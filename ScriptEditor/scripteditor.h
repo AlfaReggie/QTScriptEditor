@@ -10,9 +10,7 @@
 #include <QCloseEvent>
 
 QT_BEGIN_NAMESPACE
-namespace Ui {
-    class ScriptEditor;
-}
+namespace Ui { class ScriptEditor; }
 QT_END_NAMESPACE
 
 class ScriptEditor : public QMainWindow
@@ -20,14 +18,16 @@ class ScriptEditor : public QMainWindow
     Q_OBJECT
 
 public:
+
     ScriptEditor(QWidget *parent = nullptr);
     ~ScriptEditor();
 
 protected:
+
     void closeEvent(QCloseEvent *event) override;
 
-
 private slots:
+
     void on_actionNew_triggered();
     void on_actionOpen_triggered();
     void on_actionSave_triggered();
@@ -46,4 +46,5 @@ private:
     bool saveFile(const QString &fileName);
     bool loadFile(const QString &fileName);
 };
+
 #endif // SCRIPTEDITOR_H

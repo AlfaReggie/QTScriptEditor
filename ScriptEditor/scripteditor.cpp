@@ -11,17 +11,16 @@ ScriptEditor::ScriptEditor(QWidget *parent)
 {
     ui->setupUi(this);
 
-    // Создаем UDP сокет
     udpSocket = new QUdpSocket(this);
-    udpSocket->bind(12345); // Порт редактора
+    udpSocket->bind(12345);
 
     connect(udpSocket, &QUdpSocket::readyRead, this, &ScriptEditor::readResponse);
 
     setCurrentFile("");
 
-    // Загружаем пример скрипта
     QString defaultScript = QString::fromUtf8(R"(// QTScript для отрисовки геометрических фигур
-var canvas = new Canvas(800, 600);
+// Очищаем холст перед рисованием
+canvas.clear();
 
 // 1. Синий залитый круг
 canvas.setBrushColor(0, 0, 255); // Синий
@@ -63,7 +62,6 @@ canvas.drawLine(50, 140, 200, 140);
 // Отображаем результат
 canvas.show();
 )");
-
     ui->scriptEditor->setPlainText(defaultScript);
 }
 
@@ -74,7 +72,6 @@ ScriptEditor::~ScriptEditor()
 
 void ScriptEditor::closeEvent(QCloseEvent *event)
 {
-    // Здесь можно добавить проверку на сохранение изменений
     event->accept();
 }
 
@@ -131,7 +128,7 @@ void ScriptEditor::on_connectButton_clicked()
     }
 
     isConnected = true;
-    ui->connectButton->setEnabled(true);
+    ui->executeButton->setEnabled(true);
     ui->connectButton->setText(tr("Подключено"));
     ui->connectButton->setEnabled(false);
     ui->statusbar->showMessage(tr("Подключено к %1:%2").arg(ip).arg(port));
@@ -150,7 +147,6 @@ void ScriptEditor::on_executeButton_clicked()
         return;
     }
 
-    // Отправляем скрипт через UDP
     QByteArray datagram;
     QDataStream out(&datagram, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_5_15);
