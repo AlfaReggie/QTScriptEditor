@@ -4,11 +4,7 @@
 #include <QDataStream>
 #include <QDir>
 
-ScriptEditor::ScriptEditor(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::ScriptEditor)
-    , isConnected(false)
-{
+ScriptEditor::ScriptEditor(QWidget *parent) : QMainWindow(parent), ui(new Ui::ScriptEditor), isConnected(false) {
     ui->setupUi(this);
 
     udpSocket = new QUdpSocket(this);
@@ -65,34 +61,28 @@ canvas.show();
     ui->scriptEditor->setPlainText(defaultScript);
 }
 
-ScriptEditor::~ScriptEditor()
-{
+ScriptEditor::~ScriptEditor() {
     delete ui;
 }
 
-void ScriptEditor::closeEvent(QCloseEvent *event)
-{
+void ScriptEditor::closeEvent(QCloseEvent *event) {
     event->accept();
 }
 
-void ScriptEditor::on_actionNew_triggered()
-{
+void ScriptEditor::on_actionNew_triggered() {
     ui->scriptEditor->clear();
     setCurrentFile("");
 }
 
-void ScriptEditor::on_actionOpen_triggered()
-{
-    QString fileName = QFileDialog::getOpenFileName(this,
-                                                    tr("Открыть QTScript"), "", tr("QTScript (*.js);;Все файлы (*)"));
+void ScriptEditor::on_actionOpen_triggered() {
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Открыть QTScript"), "", tr("QTScript (*.js);;Все файлы (*)"));
 
     if (!fileName.isEmpty()) {
         loadFile(fileName);
     }
 }
 
-void ScriptEditor::on_actionSave_triggered()
-{
+void ScriptEditor::on_actionSave_triggered() {
     if (currentFile.isEmpty()) {
         on_actionSaveAs_triggered();
     } else {
@@ -100,10 +90,8 @@ void ScriptEditor::on_actionSave_triggered()
     }
 }
 
-void ScriptEditor::on_actionSaveAs_triggered()
-{
-    QString fileName = QFileDialog::getSaveFileName(this,
-                                                    tr("Сохранить QTScript"), "", tr("QTScript (*.js);;Все файлы (*)"));
+void ScriptEditor::on_actionSaveAs_triggered() {
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Сохранить QTScript"), "", tr("QTScript (*.js);;Все файлы (*)"));
 
     if (!fileName.isEmpty()) {
         saveFile(fileName);
@@ -111,8 +99,7 @@ void ScriptEditor::on_actionSaveAs_triggered()
     }
 }
 
-void ScriptEditor::on_connectButton_clicked()
-{
+void ScriptEditor::on_connectButton_clicked() {
     QString ip = ui->executorIP->text();
     QString portStr = ui->executorPort->text();
 
@@ -134,8 +121,7 @@ void ScriptEditor::on_connectButton_clicked()
     ui->statusbar->showMessage(tr("Подключено к %1:%2").arg(ip).arg(port));
 }
 
-void ScriptEditor::on_executeButton_clicked()
-{
+void ScriptEditor::on_executeButton_clicked() {
     if (!isConnected) {
         QMessageBox::warning(this, tr("Ошибка"), tr("Сначала подключитесь к исполнителю"));
         return;
@@ -160,8 +146,7 @@ void ScriptEditor::on_executeButton_clicked()
     ui->statusbar->showMessage(tr("Скрипт отправлен для выполнения..."));
 }
 
-void ScriptEditor::readResponse()
-{
+void ScriptEditor::readResponse() {
     while (udpSocket->hasPendingDatagrams()) {
         QNetworkDatagram datagram = udpSocket->receiveDatagram();
         QByteArray data = datagram.data();
@@ -189,8 +174,7 @@ void ScriptEditor::readResponse()
     }
 }
 
-void ScriptEditor::setCurrentFile(const QString &fileName)
-{
+void ScriptEditor::setCurrentFile(const QString &fileName) {
     currentFile = fileName;
     QString shownName = currentFile;
     if (currentFile.isEmpty())
@@ -199,8 +183,7 @@ void ScriptEditor::setCurrentFile(const QString &fileName)
     setWindowTitle(QString("%1[*] - QTScript Editor").arg(shownName));
 }
 
-bool ScriptEditor::saveFile(const QString &fileName)
-{
+bool ScriptEditor::saveFile(const QString &fileName) {
     QFile file(fileName);
     if (!file.open(QFile::WriteOnly | QFile::Text)) {
         QMessageBox::warning(this, tr("Ошибка"),
@@ -215,13 +198,10 @@ bool ScriptEditor::saveFile(const QString &fileName)
     return true;
 }
 
-bool ScriptEditor::loadFile(const QString &fileName)
-{
+bool ScriptEditor::loadFile(const QString &fileName) {
     QFile file(fileName);
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
-        QMessageBox::warning(this, tr("Ошибка"),
-                             tr("Не удалось открыть файл %1:\n%2.")
-                                 .arg(QDir::toNativeSeparators(fileName), file.errorString()));
+        QMessageBox::warning(this, tr("Ошибка"), tr("Не удалось открыть файл %1:\n%2.").arg(QDir::toNativeSeparators(fileName), file.errorString()));
         return false;
     }
 

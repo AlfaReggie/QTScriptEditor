@@ -9,8 +9,9 @@
 #include <QTextStream>
 #include <QCloseEvent>
 
-QT_BEGIN_NAMESPACE
-namespace Ui { class ScriptEditor; }
+QT_BEGIN_NAMESPACE namespace Ui {
+    class ScriptEditor;
+}
 QT_END_NAMESPACE
 
 class ScriptEditor : public QMainWindow
